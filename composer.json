@@ -1,0 +1,32 @@
+{
+  "name": "makuen/think-util",
+  "description": "thinkphp 自用工具包",
+  "license": "MIT",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "Makuan\\ThinkUtil\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "machuan"
+    }
+  ],
+  "require": {
+    "php": ">=7.4",
+    "topthink/framework": ">=6.0.0",
+    "topthink/think-swoole": "*",
+    "ext-json": "*"
+  },
+  "extra": {
+    "think": {
+      "services": [
+        "Makuen\\ThinkUtil\\UtilService"
+      ]
+    }
+  },
+  "config": {
+
+  }
+}
