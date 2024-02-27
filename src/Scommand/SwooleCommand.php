@@ -9,6 +9,10 @@ use think\console\Output;
 
 /**
  * command 基类, 子类可在协程中使用连接池
+ * think-swoole 在命令行模式没有启动swoole服务 所以没有初始化连接池
+ * 导致在command模式下无法并发操作数据库
+ * 变更command继承此基类 会在调用命令时启动连接池 可以并发操作数据库
+ * 但是也会对这个命令的进程进行守护 错误后会重启 完成后也不会退出 需注意
  */
 abstract class SwooleCommand extends Command
 {

@@ -9,6 +9,8 @@ use think\swoole\Sandbox;
  * send 发送一个初始参数 依次调用管道方法
  * 上一个管道方法果作为下一个管道的参数
  * 所有管道都执行完成之后 返回最终结果
+ *
+ * 同时 如果有支持swoole 可以调用current() 方法 对闭包参数进行并发执行 提升效率
  */
 class PipelineService
 {

@@ -12,7 +12,10 @@ use think\facade\Db;
 use think\helper\Str;
 
 /**
- * 数据表查询
+ * 数据表名、字段名、注释名 等查询
+ * 一个辅助命令 比我我才入职 对业务和数据库不熟 我需要找到那张表是用户表 或者找到哪里有用户手机号这个字段
+ * 我可以使用命令 `php think table_search 用户` `php think table_search 用户手机号` 查找
+ * 默认会匹配表名和字段  -T -C 选项可以限制查询表名或字段名
  */
 class TableSearch extends Command
 {

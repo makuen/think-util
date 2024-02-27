@@ -4,6 +4,12 @@ namespace Makuen\ThinkUtil\Concurrency;
 
 use Makuen\ThinkUtil\Pipeline\PipelineService;
 
+/**
+ * 并发操作封装
+ * 比如我需要统计用户表的所有用户的上个月的在线时长
+ * 查询出用户列表后一条一条的处理比较慢 且大部分都是数据库io
+ * 这个时候可以使用这个类进行并发统计 提高效率
+ */
 class ConcurrencyDo
 {
     protected \Generator $func;

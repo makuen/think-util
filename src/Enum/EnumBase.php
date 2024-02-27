@@ -3,7 +3,9 @@
 namespace Makuen\ThinkUtil\Enum;
 
 /**
- * 仿PHP8.1的枚举基类
+ * 仿照php8.1枚举类写的一个基类 方便在php7 php8.0中使用
+ *
+ * 可以在参数中做类型限制
  */
 abstract class EnumBase
 {

@@ -11,6 +11,13 @@ use think\swoole\Sandbox;
 
 /**
  * 格式器
+ *
+ * 比如用户User表 查询出来后需要对手机号进行隐藏 对时间戳进行格式化等等
+ *
+ * 就可以自定义格式化器 方法名可以字段同名 在对应方法中进行逻辑操作 是代码逻辑更清晰
+ *
+ * 同时如果查询出来的是一个列表 需要对10个用户都进行格式化 还可以使用current方法 并发操作 提升效率
+ *
  * @property array|Model $model
  */
 abstract class BaseFormatter
