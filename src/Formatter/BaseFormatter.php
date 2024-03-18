@@ -10,14 +10,6 @@ use think\Model;
 use think\swoole\Sandbox;
 
 /**
- * 格式器
- *
- * 比如用户User表 查询出来后需要对手机号进行隐藏 对时间戳进行格式化等等
- *
- * 就可以自定义格式化器 方法名可以字段同名 在对应方法中进行逻辑操作 是代码逻辑更清晰
- *
- * 同时如果查询出来的是一个列表 需要对10个用户都进行格式化 还可以使用current方法 并发操作 提升效率
- *
  * @property array|Model $model
  */
 abstract class BaseFormatter
@@ -27,6 +19,7 @@ abstract class BaseFormatter
     protected bool $current;
     protected array $fields = [];
     protected array $hidden = [];
+    protected array $only = [];
     protected array $param = [];
     protected $model;
 
@@ -42,7 +35,7 @@ abstract class BaseFormatter
     }
 
     /**
-     * 在协程中记录日志会记录不上 暂时没找到更好的方法代替
+     * 记录日志
      * @param string $message
      * @param array $context
      * @param string $level
@@ -108,6 +101,18 @@ abstract class BaseFormatter
     }
 
     /**
+     * 指定只展示的字段
+     * @param array $only
+     * @return $this
+     */
+    public function only(array $only): self
+    {
+        $this->only = $only;
+
+        return $this;
+    }
+
+    /**
      * 生成格式化处理器
      * @return \Closure
      */
@@ -146,6 +151,29 @@ abstract class BaseFormatter
                 }
             }
 
+            // 只对数据和模型进行处理
+            if ($this->only) {
+                if ($model instanceof Arrayable) {
+                    // 取缔掉模型里配置的append
+                    if ($model instanceof Model) {
+                        $model->append([]);
+                    }
+
+                    foreach ($model->toArray() as $k => $v) {
+                        if (!in_array($k, $this->only)) {
+                            unset($model[$k]);
+                        }
+                    }
+                }
+                if (is_array($model)) {
+                    foreach ($model as $k => $v) {
+                        if (!in_array($k, $this->only)) {
+                            unset($model[$k]);
+                        }
+                    }
+                }
+            }
+
             return $model;
         };
     }
@@ -163,7 +191,7 @@ abstract class BaseFormatter
             Coroutine::create(function () use (&$model, $sandbox) {
                 $sandbox->init();
                 try {
-                    $model = (new static)->setParam($this->param)->fields($this->fields)->hidden($this->hidden)->formatter()->__invoke($model);
+                    $model = (new static)->setParam($this->param)->fields($this->fields)->hidden($this->hidden)->only($this->only)->formatter()->__invoke($model);
                 } catch (\Throwable $exception) {
                     $this->log("currentFormatter错误, exception: {exception}", ["exception" => (string)$exception]);
                 }

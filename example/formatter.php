@@ -5,7 +5,7 @@
 // 从A表中查询了10条数据 对这10数据进行格式化
 // 时间戳转为字符串，钱转为两位小数等等
 
-class AFormatter extends \Makuen\ThinkUtil\Formatter\BaseFormatter
+class AFormatter extends \Makuan\ThinkUtil\Formatter\BaseFormatter
 {
     public function create_time(): string
     {

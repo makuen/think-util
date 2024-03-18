@@ -5,7 +5,7 @@
   "type": "library",
   "autoload": {
     "psr-4": {
-      "Makuan\\ThinkUtil\\": "src/"
+      "Makuen\\ThinkUtil\\": "src/"
     }
   },
   "authors": [
