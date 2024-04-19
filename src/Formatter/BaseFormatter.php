@@ -66,11 +66,15 @@ abstract class BaseFormatter
 
     /**
      * 传递参数 在格式器中使用
-     * @param array $param
+     * @param $param
      * @return self
      */
-    public function setParam(array $param): self
+    public function setParam($param): self
     {
+        if (is_callable($param)) {
+            $param = $param();
+        }
+
         $this->param = $param;
 
         return $this;
@@ -78,11 +82,15 @@ abstract class BaseFormatter
 
     /**
      * 指定需要格式的字段
-     * @param array $fields
+     * @param $fields
      * @return $this
      */
-    public function fields(array $fields): self
+    public function fields($fields): self
     {
+        if (is_callable($fields)) {
+            $fields = $fields();
+        }
+
         $this->fields = $fields;
 
         return $this;
@@ -90,11 +98,15 @@ abstract class BaseFormatter
 
     /**
      * 指定需要隐藏的字段
-     * @param array $fields
+     * @param $fields
      * @return $this
      */
-    public function hidden(array $fields): self
+    public function hidden($fields): self
     {
+        if (is_callable($fields)) {
+            $fields = $fields();
+        }
+
         $this->hidden = $fields;
 
         return $this;
@@ -102,11 +114,15 @@ abstract class BaseFormatter
 
     /**
      * 指定只展示的字段
-     * @param array $only
+     * @param $only
      * @return $this
      */
-    public function only(array $only): self
+    public function only($only): self
     {
+        if (is_callable($only)) {
+            $only = $only();
+        }
+
         $this->only = $only;
 
         return $this;
